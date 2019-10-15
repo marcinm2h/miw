@@ -10,8 +10,8 @@ def create_empty_2d_array(row: int, col: int) -> Array2d:
 class Matrix:
   __array: Array2d
 
-  def __init__(self, value: Array2d) -> None:
-    self.__array = value
+  def __init__(self, array: Array2d) -> None:
+    self.__array = array
   
   def get_array(self) -> Array2d:
     return self.__array
@@ -51,6 +51,24 @@ class Matrix:
 
     return Matrix(result_array)
 
+class Vector:
+  __array: List[int]
+
+  def __init__(self, array: List[int]) -> None:
+    self.__array = array
+
+  def dot_product(self, other: Vector) -> int:
+    if len(self.__array) != len(other.__array):
+      raise ValueError("Can not preform operation for uneven vecotrs")
+
+    result: int = 0
+    for idx in range(len(self.__array)):
+      result += self.__array[idx] * other.__array[idx]
+
+    return result
+
+
+
 
 matrix_1 = Matrix([
   [-1, -2, 3],
@@ -72,3 +90,8 @@ transposition_result_1 = matrix_1.transpoze()
 transposition_result_2 = Matrix([[0,1], [2,3], [4,5]]).transpoze()
 print(transposition_result_1.get_array())
 print(transposition_result_2.get_array())
+
+# dot product
+vector_1 = Vector([1, 2, 3])
+vector_2 = Vector([3, 4, 5])
+print(vector_1.dot_product(vector_2))
