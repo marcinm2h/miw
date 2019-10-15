@@ -2,23 +2,25 @@ from __future__ import annotations # https://stackoverflow.com/questions/1585346
 from typing import List, Tuple
 from functools import reduce
 
-def create_empty_2dArray(row: int, col: int) -> List[List[int]]:
-  return [[0]*col]*row
+Array2d = List[List[int]]
+
+def create_empty_2d_array(row: int, col: int) -> Array2d:
+  return [[0 for x in range(row)] for y in range(col)]
 
 class Matrix:
-  __value: List[List[int]]
+  __array: Array2d
 
-  def __init__(self, value: List[List[int]]) -> None:
-    self.__value = value
+  def __init__(self, value: Array2d) -> None:
+    self.__array = value
   
-  def print(self) -> None:
-    print(self.__value)
+  def get_array(self) -> Array2d:
+    return self.__array
   
   def get_dimensions(self) -> Tuple[int, int]:
-    return (len(self.__value), len(self.__value[0]))
+    return (len(self.__array), len(self.__array[0]))
   
   def has_equal_rows(self) -> bool:
-    return reduce(lambda acc, row: acc and len(row) == len(self.__value[0]), self.__value, True)
+    return reduce(lambda acc, row: acc and len(row) == len(self.__array[0]), self.__array, True)
 
   def multiply(self, other: Matrix) -> Matrix:
     if not self.has_equal_rows() or not other.has_equal_rows():
@@ -27,10 +29,17 @@ class Matrix:
     if self.get_dimensions() != other.get_dimensions():
       raise ValueError("Can not multiply matrices of non matching dimensions")
 
-    [row, col] = self.get_dimensions()
-    result_array: List[List[int]] = create_empty_2dArray(row, col)
+    [rows, cols] = self.get_dimensions()
+    result_array: Array2d = create_empty_2d_array(rows, cols)
+    for row_idx in range(rows):
+      for col_idx in range(cols):
+        result: int = 0
+        for idx in range(rows):
+          result += self.__array[row_idx][idx] * other.__array[idx][col_idx]
+        result_array[row_idx][col_idx] = result
 
     return Matrix(result_array)
+
 
 matrix_1 = Matrix([
   [-1, -2, 3],
@@ -44,6 +53,6 @@ matrix_2 = Matrix([
   [3, 2, 3]
 ])
 
-m3 = matrix_1.multiply(matrix_2)
+multiplication_result = matrix_1.multiply(matrix_2)
 
-m3.print()
+print(multiplication_result.get_array())
