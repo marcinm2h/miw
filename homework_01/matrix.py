@@ -5,7 +5,7 @@ from functools import reduce
 Array2d = List[List[int]]
 
 def create_empty_2d_array(row: int, col: int) -> Array2d:
-  return [[0 for x in range(row)] for y in range(col)]
+  return [[0 for x in range(col)] for y in range(row)]
 
 class Matrix:
   __array: Array2d
@@ -15,9 +15,15 @@ class Matrix:
   
   def get_array(self) -> Array2d:
     return self.__array
+
+  def get_rows(self) -> int:
+    return len(self.__array)
+
+  def get_cols(self) -> int:
+    return len(self.__array[0])
   
   def get_dimensions(self) -> Tuple[int, int]:
-    return (len(self.__array), len(self.__array[0]))
+    return (self.get_rows(), self.get_cols())
   
   def has_equal_rows(self) -> bool:
     return reduce(lambda acc, row: acc and len(row) == len(self.__array[0]), self.__array, True)
@@ -39,6 +45,15 @@ class Matrix:
         result_array[row_idx][col_idx] = result
 
     return Matrix(result_array)
+  
+  def transpoze(self) -> Matrix:
+    [curr_rows, curr_cols] = self.get_dimensions()
+    result_array: Array2d = create_empty_2d_array(curr_cols, curr_rows)
+    for row_idx in range(len(result_array)):
+      for col_idx in range(len(result_array[row_idx])):
+        result_array[row_idx][col_idx] = self.__array[col_idx][row_idx]
+
+    return Matrix(result_array)
 
 
 matrix_1 = Matrix([
@@ -46,13 +61,18 @@ matrix_1 = Matrix([
   [0, 2, -1],
   [-1, 3, 0]
 ])
-
 matrix_2 = Matrix([
   [1, 5, 1],
   [2, 1, 2],
   [3, 2, 3]
 ])
 
+# multiplication
 multiplication_result = matrix_1.multiply(matrix_2)
-
 print(multiplication_result.get_array())
+
+# transposition
+transposition_result_1 = matrix_1.transpoze()
+transposition_result_2 = Matrix([[0,1], [2,3], [4,5]]).transpoze()
+print(transposition_result_1.get_array())
+print(transposition_result_2.get_array())

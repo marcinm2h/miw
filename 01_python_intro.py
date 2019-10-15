@@ -228,7 +228,7 @@ print(reduce(lambda left, right: left + right, [1, 2, 3]))
 # Transpozycja macierzy
 # Iloczyn skalarny
 
-import numby as np
+import numpy as np
 a: np.ndarray = np.linspace(0,9).reshape(3, 3)
 b: np.ndarray = np.arrange(15).reshape(3, 5)
 c: np.ndarray = np.random.uniform(size=3)
