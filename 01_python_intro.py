@@ -238,3 +238,23 @@ d: np.ndarray = np.random.uniform(size=3)
 print(a @ b)
 print(a.T)
 print(c @ d)
+
+import numpy as np
+
+a = np.matrix([
+  [-1, -2, 3],
+  [0, 2, -1],
+  [-1, 3, 0]
+])
+b = np.matrix([
+  [1, 5, 1],
+  [2, 1, 2],
+  [3, 2, 3]
+])
+c = np.matrix([
+  [1, 5, 1],
+  [3, 2, 3]
+])
+
+print(a * b)
+# print(a * c)
