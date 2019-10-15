@@ -2,6 +2,9 @@ from __future__ import annotations # https://stackoverflow.com/questions/1585346
 from typing import List, Tuple
 from functools import reduce
 
+def create_empty_2dArray(row: int, col: int) -> List[List[int]]:
+  return [[0]*col]*row
+
 class Matrix:
   __value: List[List[int]]
 
@@ -12,7 +15,7 @@ class Matrix:
     print(self.__value)
   
   def get_dimensions(self) -> Tuple[int, int]:
-    return (len(self.__value[0]), len(self.__value))
+    return (len(self.__value), len(self.__value[0]))
   
   def has_equal_rows(self) -> bool:
     return reduce(lambda acc, row: acc and len(row) == len(self.__value[0]), self.__value, True)
@@ -24,7 +27,10 @@ class Matrix:
     if self.get_dimensions() != other.get_dimensions():
       raise ValueError("Can not multiply matrices of non matching dimensions")
 
-    return Matrix([[1,2,3]])
+    [row, col] = self.get_dimensions()
+    result_array: List[List[int]] = create_empty_2dArray(row, col)
+
+    return Matrix(result_array)
 
 matrix_1 = Matrix([
   [-1, -2, 3],
@@ -41,4 +47,3 @@ matrix_2 = Matrix([
 m3 = matrix_1.multiply(matrix_2)
 
 m3.print()
-
