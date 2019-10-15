@@ -15,15 +15,11 @@ class Matrix:
   
   def get_array(self) -> Array2d:
     return self.__array
-
-  def get_rows(self) -> int:
-    return len(self.__array)
-
-  def get_cols(self) -> int:
-    return len(self.__array[0])
   
   def get_dimensions(self) -> Tuple[int, int]:
-    return (self.get_rows(), self.get_cols())
+    rows: int = len(self.__array)
+    cols: int = len(self.__array[0])
+    return (rows, cols)
   
   def has_equal_rows(self) -> bool:
     return reduce(lambda acc, row: acc and len(row) == len(self.__array[0]), self.__array, True)
@@ -35,12 +31,12 @@ class Matrix:
     if self.get_dimensions() != other.get_dimensions():
       raise ValueError("Can not multiply matrices of non matching dimensions")
 
-    [rows, cols] = self.get_dimensions()
-    result_array: Array2d = create_empty_2d_array(rows, cols)
-    for row_idx in range(rows):
-      for col_idx in range(cols):
+    [curr_rows, curr_cols] = self.get_dimensions()
+    result_array: Array2d = create_empty_2d_array(curr_rows, curr_cols)
+    for row_idx in range(curr_rows):
+      for col_idx in range(curr_cols):
         result: int = 0
-        for idx in range(rows):
+        for idx in range(curr_rows):
           result += self.__array[row_idx][idx] * other.__array[idx][col_idx]
         result_array[row_idx][col_idx] = result
 
