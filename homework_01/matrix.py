@@ -36,7 +36,7 @@ class Matrix:
     for row_idx in range(curr_rows):
       for col_idx in range(curr_cols):
         result: int = 0
-        for idx in range(curr_rows):
+        for idx in range(curr_cols):
           result += self.__array[row_idx][idx] * other.__array[idx][col_idx]
         result_array[row_idx][col_idx] = result
 
@@ -73,10 +73,12 @@ class Vector:
 matrix_1 = Matrix([
   [-1, -2, 3],
   [0, 2, -1],
+  [0, 2, -1],
   [-1, 3, 0]
 ])
 matrix_2 = Matrix([
   [1, 5, 1],
+  [2, 1, 2],
   [2, 1, 2],
   [3, 2, 3]
 ])
