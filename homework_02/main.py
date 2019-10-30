@@ -24,6 +24,7 @@ if __name__ == "__main__":
     encoding="UTF-8",
     skip_header=1,
   )
+  np.random.seed(0) # for predictable shuflling
   np.random.shuffle(data)
 
   training_data = data[:120]
