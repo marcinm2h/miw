@@ -67,33 +67,31 @@ class Vector:
 
     return result
 
+if __name__ == "__main__":
+  matrix_1 = Matrix([
+    [-1, -2, 3],
+    [0, 2, -1],
+    [0, 2, -1],
+    [-1, 3, 0]
+  ])
+  matrix_2 = Matrix([
+    [1, 5, 1],
+    [2, 1, 2],
+    [2, 1, 2],
+    [3, 2, 3]
+  ])
 
+  # multiplication
+  multiplication_result = matrix_1.multiply(matrix_2)
+  print(multiplication_result.get_array())
 
+  # transposition
+  transposition_result_1 = matrix_1.transpoze()
+  transposition_result_2 = Matrix([[0,1], [2,3], [4,5]]).transpoze()
+  print(transposition_result_1.get_array())
+  print(transposition_result_2.get_array())
 
-matrix_1 = Matrix([
-  [-1, -2, 3],
-  [0, 2, -1],
-  [0, 2, -1],
-  [-1, 3, 0]
-])
-matrix_2 = Matrix([
-  [1, 5, 1],
-  [2, 1, 2],
-  [2, 1, 2],
-  [3, 2, 3]
-])
-
-# multiplication
-multiplication_result = matrix_1.multiply(matrix_2)
-print(multiplication_result.get_array())
-
-# transposition
-transposition_result_1 = matrix_1.transpoze()
-transposition_result_2 = Matrix([[0,1], [2,3], [4,5]]).transpoze()
-print(transposition_result_1.get_array())
-print(transposition_result_2.get_array())
-
-# dot product
-vector_1 = Vector([1, 2, 3])
-vector_2 = Vector([3, 4, 5])
-print(vector_1.dot_product(vector_2))
+  # dot product
+  vector_1 = Vector([1, 2, 3])
+  vector_2 = Vector([3, 4, 5])
+  print(vector_1.dot_product(vector_2))
