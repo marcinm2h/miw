@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import List, Tuple
 import numpy as np
 
 class Linear_Regression:
@@ -10,10 +10,13 @@ class Linear_Regression:
   def __calc_theta(self) -> np.matrix:
     X = self.__X
     y = self.__y
+
     return np.linalg.inv(X.T.dot(X)).dot(X.T.dot(y))
 
-  def fit(self, x1: float, x2: float, x3: float, x4: float) -> float:
+  def fit(self, x: List[float]) -> float:
+    x1, x2, x3, x4 = x
     th1, th2, th3, th4, th5 = self.__theta.T.tolist()[0]
+
     return th1*x1 + th2*x2 + th3*x3 + th4*x4 + th5
 
 if __name__ == "__main__":
@@ -32,6 +35,7 @@ if __name__ == "__main__":
     y: np.matrix = np.matrix(
       list(map(lambda x: mapping[x[0]], iris_data[['species']]))
     ).T
+
     return X, y
 
   data: np.ndarray = np.genfromtxt(
@@ -45,15 +49,30 @@ if __name__ == "__main__":
   np.random.seed(0) # for predictable results
   np.random.shuffle(data)
 
-  training_data = data[:120]
-  test_data = data[120:]
+  training_data: np.ndarray = data[:120]
+  test_data: np.ndarray = data[120:]
 
   X, y = prepare_iris_data(training_data)
 
   model: Linear_Regression = Linear_Regression(X, y)
 
-  print(f"{model.fit(5.1,3.5,1.4,.2)}, expected Iris-setosa -> 1")
-  print(f"{model.fit(5.2,2.7,3.9,1.4)}, expected Iris-versicolor -> 2")
-  print(f"{model.fit(6.3,3.4,5.6,2.4)}, expected Iris-virginica -> 3")
+  print(f"{model.fit([5.1,3.5,1.4,.2])}, expected Iris-setosa -> 1")
+  print(f"{model.fit([5.2,2.7,3.9,1.4])}, expected Iris-versicolor -> 2")
+  print(f"{model.fit([6.3,3.4,5.6,2.4])}, expected Iris-virginica -> 3")
 
-  
+
+  def get_r_squared(model: Linear_Regression, X: np.matrix, y: np.matrix) -> float:
+    nominator: float = 0
+    denominator: float = 0
+    y_list: List[List[float]] = y.tolist()
+    y_avg: float = np.average(y_list)
+
+    for idx, x in enumerate(X.tolist()):
+      nominator += (model.fit(x[:4]) - y_list[idx][0]) ** 2
+      denominator += (y_avg - y_list[idx][0]) ** 2
+
+    return 1 - (nominator/denominator)
+
+  X, y = prepare_iris_data(test_data)
+  r_squared = get_r_squared(model, X, y)
+  print(r_squared)
