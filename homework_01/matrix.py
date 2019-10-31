@@ -1,11 +1,7 @@
 from __future__ import annotations # https://stackoverflow.com/questions/15853469/putting-current-class-as-return-type-annotation
 from typing import List, Tuple
 from functools import reduce
-
-Array2d = List[List[int]]
-
-def create_empty_2d_array(row: int, col: int) -> Array2d:
-  return [[0 for x in range(col)] for y in range(row)]
+from array2d import create_empty_2d_array, Array2d
 
 class Matrix:
   __array: Array2d
